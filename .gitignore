@@ -1,0 +1,8 @@
+# Ignore all .vcd files
+*.vcd
+
+# Ignore all .vvp files
+*.vvp
+
+# Ignore my custom file type
+*.res
