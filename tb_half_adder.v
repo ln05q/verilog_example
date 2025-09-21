@@ -29,17 +29,17 @@ module tb_half_adder;
              carry);
 
     in_a = 1'b0;
-    in_1 = 1'b0;
+    in_b = 1'b0;
 
     #5 in_a = 1'b0;
-    in_a = 1'b1;
+    in_b = 1'b1;
 
 
     #10 in_a = 1'b1;
-    in_a = 1'b0;
+    in_b = 1'b0;
 
     #10 in_a = 1'b1;
-    in_a = 1'b1;
+    in_b = 1'b1;
 
     #5 $finish;
   end

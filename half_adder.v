@@ -1,11 +1,11 @@
 module half_adder(
     input in_a,
     input in_b,
-    output reg sum,
-    output reg carry
+    output sum,
+    output carry
 );
 
-assign sum = a ^ b;
-assign carry = a & b;
+assign sum = in_a ^ in_b;
+assign carry = in_a & in_b;
 
 endmodule
