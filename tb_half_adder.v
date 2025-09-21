@@ -9,6 +9,10 @@ module tb_half_adder;
   wire sum;
   wire carry;
 
+  // Parameters for self_checking
+  reg  temp_sum;
+  reg  temp_carry;
+
   // Instantiation
 
   half_adder ha (
@@ -20,27 +24,44 @@ module tb_half_adder;
 
   // Clock signal ==> none
 
+  // Define task
+
+  task generate_random_value;
+
+    reg temp_a;
+    reg temp_b;
+
+    begin
+      temp_a = $random;
+      temp_b = $random;
+
+      in_a = temp_a;
+      in_b = temp_b;
+
+      temp_sum = temp_a ^ temp_b;
+      temp_carry = temp_a & temp_b;
+
+      #3;
+    end
+  endtask
+
+
   // Testbench
   initial begin
     $dumpfile("wave_half_adder.vcd");
     $dumpvars(0, tb_half_adder);
 
-    $monitor("TIME: %d | in_a = %b | in_b = %b | sum = %b | carry = %b", $time, in_a, in_b, sum,
-             carry);
+    //$monitor("TIME: %d | in_a = %b | in_b = %b | sum = %b | carry = %b", $time, in_a, in_b, sum,
+    //        carry);
 
-    in_a = 1'b0;
-    in_b = 1'b0;
+    repeat (8) begin
+      generate_random_value();
+      $display("in_a = %b | in_b = %b | sum = %b | carry = %b", in_a,
+               in_b, sum, carry);
+      if (temp_sum == sum) begin
+        $display("TEST PASSED");
 
-    #5 in_a = 1'b0;
-    in_b = 1'b1;
-
-
-    #10 in_a = 1'b1;
-    in_b = 1'b0;
-
-    #10 in_a = 1'b1;
-    in_b = 1'b1;
-
-    #5 $finish;
+      end else $display("TEST FAILED");
+    end
   end
 endmodule
